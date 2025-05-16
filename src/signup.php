@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $query = "INSERT INTO users (name, email, password) VALUES ('$name', '$email', '$password')";
     
     if (mysqli_query($conn, $query)) {
-        echo "✅ Signup successful!";
+        header("Location: ../public/login.html");
     } else {
         echo "❌ Signup failed: " . mysqli_error($conn);
     }

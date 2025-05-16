@@ -18,11 +18,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             header("Location: ../public/dashboard.html");
             exit();
         } else {
-            header("Location: ../public/login.html");
+            //wrong password
+            header("Location: ../public/login.html?error=1");
             exit();
         }
     } else {
-        header("Location: ../public/login.html");
+        //email not found
+        header("Location: ../public/login.html?error=2");
         exit();
     }
 }
