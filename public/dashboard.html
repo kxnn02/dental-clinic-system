@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    <h2>Welcome, <span id="userName"></span>!</h2>
+    <p>Email: <span id="userEmail"></span></p>
+    <a href="../src/logout.php">Log Out</a>
+
+    <script>
+        // Get user data from PHP via AJAX
+        fetch('../src/dashboard.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.body.innerHTML = "<h2>❌ Access denied! Please log in.</h2>";
+                } else {
+                    document.getElementById("userName").textContent = data.name;
+                    document.getElementById("userEmail").textContent = data.email;
+                }
+            });
+    </script>
+</body>
+</html>
