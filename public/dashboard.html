@@ -1,27 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-</head>
-<body>
-    <h2>Welcome, <span id="userName"></span>!</h2>
-    <p>Email: <span id="userEmail"></span></p>
-    <a href="../src/logout.php">Log Out</a>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Reason</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody id="appointmentsTable">
+        <!-- Appointments will be loaded here -->
+    </tbody>
+</table>
 
-    <script>
-        // Get user data from PHP via AJAX
-        fetch('../src/dashboard.php')
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    document.body.innerHTML = "<h2>❌ Access denied! Please log in.</h2>";
-                } else {
-                    document.getElementById("userName").textContent = data.name;
-                    document.getElementById("userEmail").textContent = data.email;
-                }
+<script>
+    // Fetch user appointments from backend
+    fetch("../src/get_appointments.php")
+        .then(response => response.json())
+        .then(appointments => {
+            const tableBody = document.getElementById("appointmentsTable");
+
+            if (appointments.error) {
+                tableBody.innerHTML = `<tr><td colspan="4">${appointments.error}</td></tr>`;
+                return;
+            }
+
+            appointments.forEach(appt => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${appt.appointment_date}</td>
+                    <td>${appt.appointment_time}</td>
+                    <td>${appt.reason}</td>
+                    <td>${appt.status}</td>
+                `;
+                tableBody.appendChild(row);
             });
-    </script>
-</body>
-</html>
+        })
+        .catch(error => console.error("Error fetching appointments:", error));
+</script>

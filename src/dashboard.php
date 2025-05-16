@@ -1,15 +1,17 @@
 <?php
-session_start(); // Start session
+session_start();
 
-header('Content-Type: application/json'); // Send JSON response
-
-if (!isset($_SESSION['user_name'])) {
-    echo json_encode(["error" => "Access denied!"]);
+// Ensure the user is logged in
+if (!isset($_SESSION["user_id"])) {
+    header("Location: login.html"); // Redirect if not logged in
     exit();
 }
 
+// Send user data as JSON response
+header("Content-Type: application/json");
 echo json_encode([
-    "name" => $_SESSION['user_name'],
-    "email" => $_SESSION['user_email']
+    "user_name" => $_SESSION["user_name"],
+    "user_email" => $_SESSION["user_email"]
 ]);
+exit();
 ?>

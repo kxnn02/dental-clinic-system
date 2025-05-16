@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book an Appointment</title>
+</head>
+<body>
+    <h2>Book an Appointment</h2>
+
+    <p id="error" style="color: red;"></p>
+    <p id="success" style="color: green;"></p>
+
+    <!-- Booking Form -->
+    <form action="../src/book_appointment.php" method="POST">
+        <label for="dentist_id">Select Dentist:</label>
+        <select name="dentist_id" required>
+            <option value="1">Dr. Smith</option>
+            <option value="2">Dr. Johnson</option>
+        </select>
+
+        <label for="appointment_date">Choose Date:</label>
+        <input type="date" name="appointment_date" required>
+
+        <label for="appointment_time">Choose Time:</label>
+        <input type="time" name="appointment_time" required>
+
+        <label for="reason">Reason for Appointment:</label>
+        <textarea name="reason" placeholder="Enter reason here..." required></textarea>
+
+        <button type="submit">Book Appointment</button>
+    </form>
+
+    <script>
+        // Display success/error messages from URL parameters
+        const params = new URLSearchParams(window.location.search);
+        const error = params.get("error");
+        const success = params.get("success");
+
+        if (error === "unavailable") {
+            document.getElementById("error").textContent = "❌ Selected time slot is unavailable.";
+        } else if (error === "failed") {
+            document.getElementById("error").textContent = "❌ Booking failed. Please try again.";
+        }
+
+        if (success === "booked") {
+            document.getElementById("success").textContent = "✅ Appointment booked successfully!";
+        }
+    </script>
+</body>
+</html>
