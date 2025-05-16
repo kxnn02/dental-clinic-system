@@ -1,6 +1,6 @@
 # Dental Clinic Appointment System
 
-This project is a web-based system for managing dental appointments.
+This project is a web-based system for managing dental appointments at San Sebastian College Recoletos - Manila.
 
 ## Folder Structure
 - `public/` → Frontend files (HTML, CSS)
