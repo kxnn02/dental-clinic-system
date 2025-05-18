@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book an Appointment</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h2>Book an Appointment</h2>
@@ -14,10 +15,7 @@
     <!-- Booking Form -->
     <form action="../src/book_appointment.php" method="POST">
         <label for="dentist_id">Select Dentist:</label>
-        <select name="dentist_id" required>
-            <option value="1">Dr. Smith</option>
-            <option value="2">Dr. Johnson</option>
-        </select>
+        <select name="dentist_id" id="dentistDropdown" required></select>
 
         <label for="appointment_date">Choose Date:</label>
         <input type="date" name="appointment_date" required>
@@ -32,7 +30,21 @@
     </form>
 
     <script>
-        // Display success/error messages from URL parameters
+        // Fetch dentists dynamically from the database
+        fetch("../src/get_dentists.php")
+            .then(response => response.json())
+            .then(dentists => {
+                const dropdown = document.getElementById("dentistDropdown");
+                dentists.forEach(dentist => {
+                    const option = document.createElement("option");
+                    option.value = dentist.dentist_id;
+                    option.textContent = dentist.name;
+                    dropdown.appendChild(option);
+                });
+            })
+            .catch(error => console.error("Error fetching dentists:", error));
+
+        // Display success/error messages
         const params = new URLSearchParams(window.location.search);
         const error = params.get("error");
         const success = params.get("success");

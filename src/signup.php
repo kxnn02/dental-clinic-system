@@ -1,17 +1,20 @@
 <?php
-include 'config.php'; // Connect to MySQL
+include 'config.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Secure password
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $name = $_POST["name"];
+    $email = $_POST["email"];
+    $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
+    $role = $_POST["role"];
 
-    $query = "INSERT INTO users (name, email, password) VALUES ('$name', '$email', '$password')";
+    $query = "INSERT INTO users (name, email, password, role) VALUES ('$name', '$email', '$password', '$role')";
     
     if (mysqli_query($conn, $query)) {
-        header("Location: ../public/login.html");
+        header("Location: ../public/login.html?success=registered");
+        exit();
     } else {
-        echo "❌ Signup failed: " . mysqli_error($conn);
+        header("Location: ../public/signup.html?error=database");
+        exit();
     }
 }
 ?>

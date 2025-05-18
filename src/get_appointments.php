@@ -2,16 +2,28 @@
 session_start();
 include 'config.php';
 
-// Ensure user is logged in
-if (!isset($_SESSION["user_id"])) {
-    echo json_encode(["error" => "User not logged in"]);
+$user_id = $_SESSION["user_id"];
+$user_role = $_SESSION["user_role"];
+
+if (!$user_id || !$user_role) {
+    echo json_encode(["error" => "Unauthorized"]);
     exit();
 }
 
-$user_id = $_SESSION["user_id"];
+if ($user_role === "student") {
+    // Students see only their appointments
+    $query = "SELECT * FROM appointments WHERE student_id = '$user_id'";
+} elseif ($user_role === "dentist") {
+    // Dentists see only appointments assigned to them
+    $query = "SELECT * FROM appointments WHERE dentist_id = '$user_id'";
+} elseif ($user_role === "admin") {
+    // Admins see all appointments
+    $query = "SELECT * FROM appointments";
+} else {
+    echo json_encode(["error" => "Unauthorized"]);
+    exit();
+}
 
-// Fetch appointments for the logged-in user
-$query = "SELECT appointment_id, appointment_date, appointment_time, reason, status FROM appointments WHERE student_id = '$user_id' ORDER BY appointment_date ASC";
 $result = mysqli_query($conn, $query);
 
 $appointments = [];
@@ -19,8 +31,6 @@ while ($row = mysqli_fetch_assoc($result)) {
     $appointments[] = $row;
 }
 
-// Return appointments as JSON
 header("Content-Type: application/json");
 echo json_encode($appointments);
-exit();
 ?>
