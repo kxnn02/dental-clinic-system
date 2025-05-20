@@ -10,26 +10,21 @@ if (!$user_id || !$user_role) {
     exit();
 }
 
-if ($user_role === "student") {
-    // Students see only their appointments
-    $query = "SELECT * FROM appointments WHERE student_id = '$user_id'";
-} elseif ($user_role === "dentist") {
-    // Dentists see only appointments assigned to them
-    $query = "SELECT * FROM appointments WHERE dentist_id = '$user_id'";
-} elseif ($user_role === "admin") {
-    // Admins see all appointments
-    $query = "SELECT * FROM appointments";
-} else {
-    echo json_encode(["error" => "Unauthorized"]);
-    exit();
+if ($user_role === "dentist") {
+    // Dentists see only appointments assigned to them with student names
+    $query = "SELECT a.appointment_id, a.appointment_date, a.appointment_time, a.reason, 
+                     u.name AS student_name, a.status
+              FROM appointments a
+              LEFT JOIN users u ON a.student_id = u.user_id
+              WHERE a.dentist_id = ?";
 }
 
-$result = mysqli_query($conn, $query);
+$stmt = mysqli_prepare($conn, $query);
+mysqli_stmt_bind_param($stmt, "i", $user_id);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
 
-$appointments = [];
-while ($row = mysqli_fetch_assoc($result)) {
-    $appointments[] = $row;
-}
+$appointments = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 header("Content-Type: application/json");
 echo json_encode($appointments);
