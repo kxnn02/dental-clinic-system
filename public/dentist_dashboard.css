@@ -1,0 +1,31 @@
+.header {
+    display: flex;
+    background-color: rgba(255, 0, 0, 0.6); /* Red bg */
+    gap: 1vw; /* Adjust spacing between logo and text */
+    font-family: Old English Text MT;
+    font-size: 1.3vw;
+    padding: .5vw 0vw .25vw 5vw;
+  }
+
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 1000; /* Ensures it stays above other content */
+  }
+
+    .header img {
+        width: 8vw; /* Adjust logo size */
+        height: auto;
+        margin-left: -4vw;
+    }
+
+      .subtext {
+        font-size: 1.5rem; 
+        color: black; 
+        font-family: Old English Text MT;
+        margin-left: -56.5vw;
+        margin-top: 2.5vw;
+      }
