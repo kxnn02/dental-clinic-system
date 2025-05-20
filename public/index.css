@@ -57,6 +57,10 @@ nav ul li a {
     font-size: 20px;
 }
 
+.hero h1, p {
+    color: black;
+}
+
 .btn {
     display: inline-block;
     padding: 12px 24px;
