@@ -1,10 +1,11 @@
 .header {
     display: flex;
-    background-color: rgba(255, 0, 0, 0.6); /* Red bg */
+    background-color: #82A0CD;
     gap: 1vw; /* Adjust spacing between logo and text */
     font-family: Old English Text MT;
-    font-size: 1.3vw;
-    padding: .5vw 0vw .25vw 5vw;
+    font-size: 1.2vw;
+    padding: .25vw 0vw .25vw 5vw;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   }
 
   .header {
@@ -17,15 +18,63 @@
   }
 
     .header img {
-        width: 8vw; /* Adjust logo size */
+        width: 6vw; /* Adjust logo size */
         height: auto;
         margin-left: -4vw;
     }
 
       .subtext {
-        font-size: 1.5rem; 
+        font-size: 1.3vw; 
         color: black; 
         font-family: Old English Text MT;
-        margin-left: -56.5vw;
+        margin-left: -52.3vw;
         margin-top: 2.5vw;
       }
+
+      .side-bar {
+        display: flex;
+        flex-direction: column; /* Stack children vertically */
+        background-color: #F0F0F0;
+        padding: 4vw 0vw .25vw 5vw;
+        width: 15vw; /* Set a fixed or relative width for the sidebar */
+        height: 100vh; /* Optional: make it stretch the full screen height */
+        position: fixed; /* Optional: make it stay in place */
+        top: 6vw; /* Adjust if header is fixed */
+        left: 0;
+        box-shadow: 4px 0 8px rgba(0, 0, 0, 0.1); /* Optional shadow */
+    }
+
+    .side-bar h3, .side-bar h4 {
+        margin: 0.5vw 0;
+        font-family: Arial, sans-serif;
+    }
+
+.main-nav, .user-area {
+    margin-top: 1.5vw;
+    margin-bottom: 1.5vw;
+}
+
+.main-nav h3, .user-area h3 {
+    font-size: 1.2vw;
+    margin-bottom: 1.5vw;
+}
+
+.main-nav h4, .user-area h4 {
+    font-size: 1vw;
+    padding-left: 1vw;
+    cursor: pointer;
+}
+
+.main-nav h4:hover, .user-area h4:hover {
+    color: #82A0CD;
+    text-decoration: underline;
+}
+
+.section-title {
+    background-color: #ddd; /* Light gray background */
+    padding: 1vw;
+    margin-right: 1vw;
+    font-size: 1.2vw;
+    font-weight: bold;
+    margin-bottom: 1vw;
+}
