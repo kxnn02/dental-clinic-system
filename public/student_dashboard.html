@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Student Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="student_dashboard.css">
 </head>
 <body>
     <div class="dashboard-wrapper">
@@ -18,7 +18,7 @@
         </header>
 
         <!-- Sidebar -->
-        <aside class="Sidebar">
+        <aside class="Sidebar" id="sidebar">
             <div class="logo">
                 <img src="http://localhost/dental-clinic-system/uploads/SSCR-LOGO.png" alt="Logo">
                 <h2>Dental Clinic</h2>
@@ -59,6 +59,17 @@
         </main>
     </div>
 
+    <!-- Sidebar Toggle Script -->
+    <script>
+        const menuIcon = document.getElementById("toggle");
+        const sidebar = document.getElementById("sidebar");
+
+        menuIcon.addEventListener("click", () => {
+            sidebar.classList.toggle("hidden");
+        });
+    </script>
+
+    <!-- Dynamic Calendar Script -->
     <script>
         let currentMonth = new Date().getMonth();
         let currentYear = new Date().getFullYear();

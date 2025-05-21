@@ -1,17 +1,18 @@
-
+/* Reset Default Browser Styling */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* General Styling */
 body {
     font-family: 'Montserrat', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f4f4f4;
     color: #333;
 }
 
-
+/* Dashboard Layout */
 .dashboard-wrapper {
     display: flex;
     min-height: 100vh;
@@ -33,26 +34,13 @@ body {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
+/* Hamburger Menu */
 .menu-icon {
     font-size: 24px;
     cursor: pointer;
 }
 
-.header-title {
-    flex: 1;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-left: 10px;
-}
-
-.header-title h2 {
-    font-size: 18px;
-    font-weight: normal;
-    color: #fff;
-}
-
-
+/* Sidebar */
 .Sidebar {
     width: 250px;
     background-color: #ffffff;
@@ -60,6 +48,7 @@ body {
     padding-top: 80px;
     border-right: 1px solid #ccc;
     transition: transform 0.3s ease;
+    transform: translateX(0);
     position: fixed;
     top: 0;
     left: 0;
@@ -68,10 +57,12 @@ body {
     z-index: 5;
 }
 
+/* Sidebar Hidden Fix */
 .Sidebar.hidden {
     transform: translateX(-100%);
 }
 
+/* Sidebar Branding */
 .logo {
     text-align: center;
 }
@@ -86,6 +77,7 @@ body {
     color: #333;
 }
 
+/* User Profile */
 .user {
     text-align: center;
     margin: 20px 0;
@@ -136,10 +128,12 @@ body {
     transition: margin-left 0.3s ease;
 }
 
+/* Sidebar Toggle Adjustments */
 .dashboard-wrapper.sidebar-hidden .main-content {
     margin-left: 0;
 }
 
+/* Calendar */
 .calendar-container {
     background-color: #fff;
     padding: 20px;
@@ -153,6 +147,7 @@ body {
     margin-bottom: 20px;
 }
 
+/* Calendar Table */
 .calendar {
     width: 100%;
     border-collapse: collapse;
