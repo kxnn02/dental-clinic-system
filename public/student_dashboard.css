@@ -172,3 +172,9 @@ body {
     background-color: #9db7d7;
     color: white;
 }
+
+.disabled {
+    color: gray;
+    pointer-events: none;
+    background: #f4f4f4;
+}

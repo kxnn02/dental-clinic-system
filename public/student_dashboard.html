@@ -24,13 +24,19 @@
                 <h2>Dental Clinic</h2>
             </div>
             <div class="user">
-                <img src="http://localhost/dental-clinic-system/uploads/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-illustration-vector-removebg-preview.png" alt="User">
-                <span class="username">Gerald Andrei P. Baguisa</span>
+                <img src="http://localhost/dental-clinic-system/uploads/default-avatar-profile-icon.png" alt="User">
+                <span class="username" id="studentName"></span>
             </div>
             <nav class="sidebar-navigation">
-                <a href="book_appointment.html"><img src="http://localhost/dental-clinic-system/uploads/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-illustration-vector-removebg-preview.png" alt="Profile">Profile</a>
-                <a href="book_appointment.html"><img src="http://localhost/dental-clinic-system/uploads/appointment.png" alt="Appointment">Appointment</a>
-                <a href="book_appointment.html"><img src="http://localhost/dental-clinic-system/uploads/calendar.png" alt="Calendar">Calendar</a>
+                <a href="book_appointment.html">
+                    <img src="http://localhost/dental-clinic-system/uploads/default-avatar-profile-icon.png" alt="Profile">Profile
+                </a>
+                <a href="book_appointment.html">
+                    <img src="http://localhost/dental-clinic-system/uploads/appointment.png" alt="Appointment">Upcoming Appointments
+                </a>
+                <a href="../src/logout.php" class="logout-button">
+                    <img src="http://localhost/dental-clinic-system/uploads/logout.png" alt="Logout">Sign Out
+                </a>
             </nav>
         </aside>
 
@@ -69,35 +75,62 @@
         });
     </script>
 
+    <!-- Fetch Logged-in User's Name -->
+    <script>
+        fetch("../src/get_user.php")
+            .then(response => response.json())
+            .then(user => {
+                if (user.name) {
+                    document.getElementById("studentName").textContent = user.name;
+                } else {
+                    document.getElementById("studentName").textContent = "Guest"; // Fallback name
+                }
+            })
+            .catch(error => console.error("Error fetching username:", error));
+    </script>
+
     <!-- Dynamic Calendar Script -->
     <script>
         let currentMonth = new Date().getMonth();
         let currentYear = new Date().getFullYear();
 
         function generateCalendar(month, year) {
-            const calendarBody = document.getElementById("calendarBody");
-            const calendarTitle = document.getElementById("calendarTitle");
-            calendarBody.innerHTML = ""; // Clear previous table
+    const calendarBody = document.getElementById("calendarBody");
+    const calendarTitle = document.getElementById("calendarTitle");
+    calendarBody.innerHTML = ""; // Clear previous table
 
-            const firstDay = new Date(year, month, 1).getDay();
-            const totalDays = new Date(year, month + 1, 0).getDate(); // Get total days in month
+    const firstDay = new Date(year, month, 1).getDay();
+    const totalDays = new Date(year, month + 1, 0).getDate(); // Get total days in month
+    const today = new Date().setHours(0, 0, 0, 0); // Normalize today's date for comparison
 
-            calendarTitle.textContent = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(new Date(year, month));
+    calendarTitle.textContent = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(new Date(year, month));
 
-            let row = document.createElement("tr");
-            for (let i = 0; i < firstDay; i++) {
-                row.innerHTML += "<td></td>"; // Empty cells for first week
-            }
+    let row = document.createElement("tr");
 
-            for (let day = 1; day <= totalDays; day++) {
-                if ((firstDay + day - 1) % 7 === 0) {
-                    calendarBody.appendChild(row);
-                    row = document.createElement("tr");
-                }
-                row.innerHTML += `<td><a href="book_appointment.html?date=${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}">${day}</a></td>`;
-            }
-            calendarBody.appendChild(row);
+    // Empty cells before the first day
+    for (let i = 0; i < firstDay; i++) {
+        row.innerHTML += "<td></td>";
+    }
+
+    for (let day = 1; day <= totalDays; day++) {
+        const date = new Date(year, month, day).setHours(0, 0, 0, 0); // Normalize date for accurate comparison
+        const formattedDate = `${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+
+        // Disable past dates
+        if (date < today) {
+            row.innerHTML += `<td class="disabled">${day}</td>`;
+        } else {
+            row.innerHTML += `<td class="clickable"><a href="book_appointment.html?selected_date=${formattedDate}">${day}</a></td>`;
         }
+
+        if ((firstDay + day - 1) % 7 === 6) {
+            calendarBody.appendChild(row);
+            row = document.createElement("tr");
+        }
+    }
+    calendarBody.appendChild(row);
+}
+
 
         function changeMonth(step) {
             currentMonth += step;

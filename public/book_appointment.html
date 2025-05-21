@@ -18,7 +18,7 @@
         <select name="dentist_id" id="dentistDropdown" required></select>
 
         <label for="appointment_date">Choose Date:</label>
-        <input type="date" id="appointment_date" name="appointment_date" required>
+        <input type="date" id="appointment_date" name="appointment_date" required min="">
 
         <label for="appointment_time">Choose Time:</label>
         <input type="time" name="appointment_time" required>
@@ -44,14 +44,19 @@
             })
             .catch(error => console.error("Error fetching dentists:", error));
 
-        // Auto-fill selected date from URL
+        // Set today's date as the minimum selectable date
+        const today = new Date().toISOString().split("T")[0];
+        document.getElementById("appointment_date").setAttribute("min", today);
+        
+            // Auto-fill selected date from URL
         const urlParams = new URLSearchParams(window.location.search);
         const selectedDate = urlParams.get("date");
 
         if (selectedDate) {
             document.getElementById("appointment_date").value = selectedDate;
         }
-
+        
+        
         // Display success/error messages
         const error = urlParams.get("error");
         const success = urlParams.get("success");
