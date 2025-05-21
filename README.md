@@ -10,6 +10,6 @@ This project is a web-based system for managing dental appointments at San Sebas
 - `docs/` → Documentation
 
 # Members
--Fernandez, Kenneth Clein 
-- Baguisa, Andrei
+- Fernandez, Kenneth Clein
 - Miranda, Marvin
+- Baguisa, Andrei
