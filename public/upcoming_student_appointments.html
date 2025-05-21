@@ -26,7 +26,7 @@
     </main>
 
     <script>
-        fetch("../src/get_appointments.php")
+        fetch("../src/upcoming_student_appointments.php")
             .then(response => response.json())
             .then(appointments => {
                 const tableBody = document.getElementById("appointmentsTable");
