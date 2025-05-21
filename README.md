@@ -8,3 +8,8 @@ This project is a web-based system for managing dental appointments at San Sebas
 - `database/` → SQL scripts
 - `uploads/` → Profile pictures
 - `docs/` → Documentation
+
+# Members
+-Fernandez, Kenneth Clein 
+- Baguisa, Andrei
+- Miranda, Marvin
