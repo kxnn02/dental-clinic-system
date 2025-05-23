@@ -22,7 +22,7 @@
     <!-- SIDE BAR -->
     <div class="side-bar">
         <div class="user-info">
-          <h2>Welcome! Dr. (Name)</h2>
+          <h2>Welcome! Dr. <span id="dentistName">Loading...</span></h2>
         </div>
       
         <div class="main-nav">
@@ -37,7 +37,7 @@
         <div class="user-area">
           <div class="section-title">User Area</div>
           <a href="profile"><h4>Profile</h4></a>
-          <a href="log_out.html"><h4>Log out</h4></a>
+          <a href="../src/logout.php" class="logout-button"><h4>Logout</h4></a>
         </div>
       </div>
 
@@ -46,15 +46,15 @@
         <div class="TPatient">
             <h2>Total Patients</h2>
             <h2>This month</h2> <!-- if possible gawing automatic sa kung anong month ngayon-->
-            <h3>3</h3> <!-- Amount kung ilan yung patient na na-accept-->
+            <h3 id="totalPatients">Loading...</h3> <!-- Amount kung ilan yung patient na na-accept-->
             <a href="finished_appointments.html" class="more-info">More info</a> <!-- link na mapupunta sa mga patients na natapos na niya / results if necessary pa itong function-->
         </div> 
 
         <div class="Upcoming">
             <h2>Upcoming Appointments</h2>
             <h2>This month</h2> <!-- if possible gawing automatic sa kung anong month ngayon-->
-            <h3>3</h3> <!-- Amount kung ilan yung patient na nagbook ng sched-->
-            <a href="dentist_appointment_schedule.html" class="more-info">More info</a> <!-- dadalhin sa "Appointment schedule" part ng dentist side-->
+            <h3 id="upcomingAppointments">Loading...</h3> <!-- Amount kung ilan yung patient na nagbook ng sched-->
+            <a href="upcoming_dentist_appointments.html" class="more-info">More info</a> <!-- dadalhin sa "Appointment schedule" part ng dentist side-->
         </div>
     </div>
 
@@ -90,14 +90,32 @@
         fetch("../src/get_user.php")
             .then(response => response.json())
             .then(user => {
-                if (user.name) {
-                    document.getElementById("studentName").textContent = user.name;
+                if (user.name && user.role === "dentist") {
+                    document.getElementById("dentistName").textContent = user.name;
                 } else {
-                    document.getElementById("studentName").textContent = "Guest"; // Fallback name
+                    document.getElementById("dentistName").textContent = "Guest";
                 }
             })
-            .catch(error => console.error("Error fetching username:", error));
+            .catch(error => console.error("Error fetching dentist's name:", error));
     </script>
+
+
+
+    <!-- to get dashboard data (total patients, upcoming patients) -->
+    <script>
+        fetch("../src/get_dashboard_data.php")
+            .then(response => response.json())
+            .then(data => {
+                if (!data.error) {
+                    document.getElementById("totalPatients").textContent = data.total_patients;
+                    document.getElementById("upcomingAppointments").textContent = data.upcoming_appointments;
+                } else {
+                    console.error("Error fetching dashboard data:", data.error);
+                }
+            })
+            .catch(error => console.error("Error:", error));
+    </script>
+
 
         <!-- Dynamic Calendar Script -->
         <script>

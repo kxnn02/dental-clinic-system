@@ -6,5 +6,8 @@ if (!isset($_SESSION["user_id"])) {
     exit();
 }
 
-echo json_encode(["name" => $_SESSION["user_name"]]);
+echo json_encode([
+    "name" => $_SESSION["user_name"],
+    "role" => $_SESSION["user_role"] // Includes role for dashboard logic
+]);
 ?>

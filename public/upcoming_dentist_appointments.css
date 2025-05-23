@@ -1,4 +1,4 @@
-/* General Styling */
+/* General Page Styling */
 body {
     font-family: Arial, sans-serif;
     background-color: #E3EAF8; /* Matches dashboard */
@@ -48,6 +48,13 @@ body {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     text-align: center;
+}
+
+/* Title */
+.appointment-main h2 {
+    font-size: 2vw;
+    margin-bottom: 2vw;
+    color: #007BFF;
 }
 
 /* Table */

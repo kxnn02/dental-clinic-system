@@ -9,13 +9,13 @@ if (!$user_id) {
     exit();
 }
 
-// Fetch upcoming student appointments (ONLY Pending or Approved)
-$query = "SELECT appointment_id, appointment_date, appointment_time, reason, status
-          FROM appointments 
-          WHERE student_id = ? 
-          AND appointment_date >= CURDATE() 
-          AND status IN ('Pending', 'Approved') -- Excludes Completed & Canceled
-          ORDER BY appointment_date ASC";
+// Fetch ALL appointments for the dentist (Past, Present & Future)
+$query = "SELECT a.appointment_id, a.appointment_date, a.appointment_time, a.reason, 
+                 u.name AS student_name, a.status
+          FROM appointments a
+          LEFT JOIN users u ON a.student_id = u.user_id
+          WHERE a.dentist_id = ?
+          ORDER BY a.appointment_date DESC";  // Show latest first
 
 $stmt = mysqli_prepare($conn, $query);
 mysqli_stmt_bind_param($stmt, "i", $user_id);
